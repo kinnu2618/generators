@@ -53,7 +53,7 @@ def generate_code(problem_statement, programming_language, programming_type):
 st.set_page_config(layout="wide")
 
 # Sidebar for selecting between Blog Generator or Code Generator
-st.sidebar.title("Select Application")
+st.sidebar.title("SELECT APPLICATION")
 app_mode = st.sidebar.radio("Choose Application", ["Blog Generator", "Code Generator"])
 
 # Blog Generator Interface
