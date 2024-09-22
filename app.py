@@ -35,7 +35,7 @@ def generate_code(problem_statement, programming_language, programming_type):
     return response.text
 
 # Apply custom CSS for background, fonts, and button styling
-st.markdown(
+st.markdown("""
     <style>
     body {
         background-color: #f5f5f5;
@@ -71,7 +71,7 @@ st.markdown(
         border: 1px solid #87ceeb;
     }
     </style>
-    , unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # Set page configuration and custom background image
 st.set_page_config(layout="wide", page_title="Code Generator")
