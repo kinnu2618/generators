@@ -87,7 +87,7 @@ elif app_mode == "CODE GENERATOR 💻":
     st.sidebar.title("CODE DETAILS")
     st.sidebar.subheader("ENTER CONTEXT FOR CODE GENERATION")
 
-    problem_statement = st.sidebar.text_input("PROBLEM STATEMENT")
+    problem_statement = st.sidebar.text_area("PROBLEM STATEMENT")
     programming_language = st.sidebar.text_input("PROGRAMMING LANGUAGE")
     
     # Select between Static or Dynamic programming
