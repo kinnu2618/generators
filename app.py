@@ -34,47 +34,14 @@ def generate_code(problem_statement, programming_language, programming_type):
     response = chat_session.send_message("INSERT_INPUT_HERE")
     return response.text
 
-# Apply custom CSS for background, fonts, and button styling
-st.markdown("""
-    <style>
-    body {
-        background-color: #f5f5f5;
-    }
-    .main {
-        background-color: #f0f8ff;
-    }
-    h1 {
-        color: #00008b;
-        text-align: center;
-        font-family: 'Arial', sans-serif;
-    }
-    .stButton>button {
-        background-color: #1e90ff;
-        color: white;
-        font-size: 18px;
-        border-radius: 8px;
-        height: 3em;
-        width: 100%;
-        margin-top: 10px;
-    }
-    .sidebar .stButton>button {
-        background-color: #4682b4;
-        color: white;
-        font-size: 18px;
-        border-radius: 8px;
-    }
-    .stTextInput>div>input {
-        border-radius: 8px;
-        border: 1px solid #4682b4;
-    }
-    .sidebar .stTextInput>div>input {
-        border: 1px solid #87ceeb;
-    }
-    </style>
-""", unsafe_allow_html=True)
+# Load external CSS file
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# Set page configuration and custom background image
+# Set page configuration and load external CSS
 st.set_page_config(layout="wide", page_title="Code Generator")
+load_css("styles.css")
 
 # Add a background image or header image
 st.image('https://example.com/header_image.jpg', use_column_width=True)
