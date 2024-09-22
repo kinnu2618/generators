@@ -34,37 +34,83 @@ def generate_code(problem_statement, programming_language, programming_type):
     response = chat_session.send_message("INSERT_INPUT_HERE")
     return response.text
 
-# Streamlit interface layout configuration
-st.set_page_config(layout="wide")
+# Apply custom CSS for background, fonts, and button styling
+st.markdown(
+    <style>
+    body {
+        background-color: #f5f5f5;
+    }
+    .main {
+        background-color: #f0f8ff;
+    }
+    h1 {
+        color: #00008b;
+        text-align: center;
+        font-family: 'Arial', sans-serif;
+    }
+    .stButton>button {
+        background-color: #1e90ff;
+        color: white;
+        font-size: 18px;
+        border-radius: 8px;
+        height: 3em;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .sidebar .stButton>button {
+        background-color: #4682b4;
+        color: white;
+        font-size: 18px;
+        border-radius: 8px;
+    }
+    .stTextInput>div>input {
+        border-radius: 8px;
+        border: 1px solid #4682b4;
+    }
+    .sidebar .stTextInput>div>input {
+        border: 1px solid #87ceeb;
+    }
+    </style>
+    , unsafe_allow_html=True)
 
-# Title of the app
-st.title('💻 C O D E  G E N E R A T O R 💻')
-st.subheader('Enter your problem statement and choose options to generate code!')
+# Set page configuration and custom background image
+st.set_page_config(layout="wide", page_title="Code Generator")
 
-# Sidebar for user input
+# Add a background image or header image
+st.image('https://example.com/header_image.jpg', use_column_width=True)
+
+# Title of the app with custom style
+st.markdown("<h1> CODE GENERATOR 😜🤖</h1>", unsafe_allow_html=True)
+st.subheader('ENTER YOUR PROBLEM STATEMENT AND CHOOSE OPTIONS TO GENERATE CODE!')
+
+# Sidebar for user input with customized title and styling
 with st.sidebar:
-    st.title("INPUT YOUR CODE DETAILS")
-    st.subheader("Enter Details for Code Generation")
+    st.image('https://example.com/sidebar_image.jpg', use_column_width=True)  # Add an image to the sidebar
+    st.title("💡 INPUT YOUR CODE DETAILS")
+    st.subheader("📝 ENTER DETAILS FOR CODE GENERATION")
 
-    problem_statement = st.text_input("Problem Statement")
-    programming_language = st.text_input("Programming Language (e.g., Python, Java, C++)")
+    # Customized input fields
+    problem_statement = st.text_input("PROBLEM STATEMENT👀")
+    programming_language = st.text_input("PROGRAMMING LANGUAGE👨🏻‍🍳")
     
-    # Select between Static or Dynamic programming
+    # Dropdown selection for programming type with styling
     programming_type = st.selectbox(
-        "Programming Type",
-        ("Static Programming", "Dynamic Programming")
+        "PROGRAMMING TYPE",
+        ("STATIC PROGRAMMING😜 ", "DYNAMIC PROGRAMMING🗿")
     )
 
+    # Customized button
     submit_button = st.button("Generate Code 💻")
 
 # If the user presses the button
 if submit_button:
     if problem_statement and programming_language and programming_type:
-        with st.spinner("Generating code..."):
+        with st.spinner("🛠️ Generating code..."):
             # Call the generate_code function
             generated_code = generate_code(problem_statement, programming_language, programming_type)
             
-            # Display the generated code
+            # Display the generated code with a custom layout
+            st.markdown("<h3>📝 Generated Code:</h3>", unsafe_allow_html=True)
             st.code(generated_code)
     else:
-        st.error("Please provide a problem statement, programming language, and choose a programming type.")
+        st.error("⚠️ Please provide a problem statement, programming language, and choose a programming type.")
