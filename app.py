@@ -54,7 +54,7 @@ st.set_page_config(layout="wide")
 
 # Sidebar for selecting between Blog Generator or Code Generator
 st.sidebar.title("SELECT APPLICATION")
-app_mode = st.sidebar.selectbox("Choose Application", ["Blog Generator 📝", "Code Generator 💻"])
+app_mode = st.sidebar.radio("Choose Application", ["Blog Generator", "Code Generator"])
 
 # Blog Generator Interface
 if app_mode == "Blog Generator":
