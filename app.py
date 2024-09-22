@@ -1,6 +1,6 @@
 import streamlit as st
 import google.generativeai as genai
-from apikey import google_gemini_api_key  # Replace this with your actual API key import method
+from apikey import google_gemini_api_key  
 
 # Configure the API key for Google Gemini AI
 genai.configure(api_key=google_gemini_api_key)
@@ -37,7 +37,7 @@ def generate_blog_post(title, keywords, num_words):
 def generate_code(problem_statement, programming_language, programming_type):
     prompt = (
         f"Generate code for the following problem statement: '{problem_statement}' "
-        f"in {programming_language}. The code should focus on {programming_type} programming."
+        f"in {programming_language}. The code should be in {programming_type} type of programming."
     )
     chat_session = model.start_chat(
         history=[
@@ -51,55 +51,55 @@ def generate_code(problem_statement, programming_language, programming_type):
 st.set_page_config(layout="wide")
 
 # Sidebar for selecting between Blog Generator or Code Generator
-st.sidebar.title("Select Application")
-app_mode = st.sidebar.selectbox("Choose Application", ["Blog Generator 📝", "Code Generator 💻"])
+st.sidebar.title("SELECT APPLICATION")
+app_mode = st.sidebar.selectbox("Choose Application", ["BLOG GENERATOR 📝", "CODE GENERATOR 💻"])
 
 # Blog Generator Interface
-if app_mode == "Blog Generator 📝":
-    st.title('📝 BLOG GENERATOR 😎')
-    st.subheader('Enter your topic and get a blog post generated for you!')
+if app_mode == "BLOG GENERATOR 📝":
+    st.title('B L O G 😎')
+    st.subheader('ENTER YOUR TOPIC AND GET A BLOG POST GENERATED FOR YOU!')
 
     # Sidebar for blog post input
     st.sidebar.title("BLOG DETAILS")
-    st.sidebar.subheader("Enter Details for Blog Generation")
+    st.sidebar.subheader("ENTER DETAILS FOR BLOG GENERATION")
 
-    blog_title = st.sidebar.text_input("Blog Title")
-    keywords = st.sidebar.text_area("Keywords (comma-separated)")
-    num_words = st.sidebar.slider("Number of Words", min_value=500, max_value=3000, step=100)
+    blog_title = st.sidebar.text_input("BLOG TITLE")
+    keywords = st.sidebar.text_area("KEYWORDS (comma-separated)")
+    num_words = st.sidebar.slider("NO.OF WORDS", min_value=1000, max_value=100000, step=1000)
     
-    generate_blog_button = st.sidebar.button("Generate Blog Post 📝")
+    generate_blog_button = st.sidebar.button("GENERATE BLOG POST 📝")
 
     # If the user presses the button to generate blog
     if generate_blog_button:
         if blog_title and keywords:
-            with st.spinner("Generating blog post..."):
+            with st.spinner("Generating blog post...!"):
                 blog_content = generate_blog_post(blog_title, keywords, num_words)
                 st.write(blog_content)
         else:
             st.error("Please provide both a blog title and keywords.")
 
 # Code Generator Interface
-elif app_mode == "Code Generator 💻":
-    st.title('💻 CODE GENERATOR 🤖')
-    st.subheader('Enter your problem statement and get code generated!')
+elif app_mode == "CODE GENERATOR 💻":
+    st.title('C O D E 🤖')
+    st.subheader('ENTER YOUR PROBLEM STATEMENT AND GET CODE GENERATED!')
 
     # Sidebar for code input
     st.sidebar.title("CODE DETAILS")
-    st.sidebar.subheader("Enter Details for Code Generation")
+    st.sidebar.subheader("ENTER CONTEXT FOR CODE GENERATION")
 
-    problem_statement = st.sidebar.text_input("Problem Statement")
-    programming_language = st.sidebar.text_input("Programming Language (e.g., Python, Java)")
+    problem_statement = st.sidebar.text_input("PROBLEM STATEMENT")
+    programming_language = st.sidebar.text_input("PROGRAMMING LANGUAGE")
     
     # Select between Static or Dynamic programming
-    programming_type = st.sidebar.selectbox("Programming Type", ["Static", "Dynamic"])
+    programming_type = st.sidebar.selectbox("PROGRAMMING TYPE", ["STATIC", "DYNAMIC"])
     
-    generate_code_button = st.sidebar.button("Generate Code 💻")
+    generate_code_button = st.sidebar.button("GENERATE CODE 💻!")
 
     # If the user presses the button to generate code
     if generate_code_button:
         if problem_statement and programming_language and programming_type:
-            with st.spinner("Generating code..."):
+            with st.spinner("Generating code...!"):
                 generated_code = generate_code(problem_statement, programming_language, programming_type)
                 st.code(generated_code)
         else:
-            st.error("Please provide a problem statement, programming language, and choose a programming type.")
+            st.error("Please provide a problem statement, programming language, and choose a programming type....!")
