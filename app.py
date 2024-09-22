@@ -67,7 +67,7 @@ if app_mode == "Blog Generator":
 
     blog_title = st.sidebar.text_input("Blog Title")
     keywords = st.sidebar.text_area("Keywords (comma-separated)")
-    num_words = st.sidebar.slider("Number of Words", min_value=500, max_value=3000, step=100)
+    num_words = st.sidebar.slider("Number of Words", min_value=1000, max_value=100000, step=100)
     
     generate_blog_button = st.sidebar.button("Generate Blog Post 📝")
 
