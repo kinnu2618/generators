@@ -49,7 +49,7 @@ st.set_page_config(layout="wide", page_title="Code Generator")
 load_css("styles.css")
 
 # Add an optional header image (replace with your image URL)
-st.image('https://example.com/header_image.jpg', use_column_width=True)
+st.image('https://i.pinimg.com/474x/7f/08/49/7f08493bc0004396c9eff78102928afc.jpg', use_column_width=True)
 
 # Title and description of the app
 st.markdown("<h1>💻 CODE GENERATOR 😜🤖</h1>", unsafe_allow_html=True)
@@ -57,7 +57,7 @@ st.subheader('Enter your problem statement and choose options to generate code!'
 
 # Sidebar for user input
 with st.sidebar:
-    st.image('https://example.com/sidebar_image.jpg', use_column_width=True)  # Add an image to the sidebar
+    st.image('https://tse1.mm.bing.net/th?id=OIP.l7yfZxejSdQkR89sVHP1CwHaFd&pid=Api&P=0&h=180', use_column_width=True)  # Add an image to the sidebar
     st.title("💡 INPUT YOUR CODE DETAILS")
     st.subheader("📝 ENTER DETAILS FOR CODE GENERATION")
 

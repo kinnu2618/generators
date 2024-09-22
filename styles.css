@@ -1,33 +1,95 @@
+/* Apply a background color to the whole app */
 body {
-    background-color: #9a4380;
-}
-.main {
-    background-color: #498eca;
-}
-h1 {
-    color: #00008b;
-    text-align: center;
+    background-color: #9a4380; /* Darker shade for better contrast */
     font-family: 'Arial', sans-serif;
 }
+
+/* Style the main app area */
+.main {
+    background-color: #a8c1d6; /* Soft pastel color for main area */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the headers */
+h1 {
+    color: #030312; /* Dark color for header */
+    text-align: center;
+    font-size: 2.5em; /* Increase font size for better visibility */
+    margin-bottom: 20px;
+}
+
+/* Customize button styles */
 .stButton>button {
-    background-color: #1e90ff;
-    color: rgb(188, 146, 223);
+    background-color: #1e90ff; /* Bright blue */
+    color: #ffffff; /* White text */
     font-size: 18px;
     border-radius: 8px;
     height: 3em;
     width: 100%;
     margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Animation effects */
 }
+
+.stButton>button:hover {
+    background-color: #00bfff; /* Lighter blue on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+}
+
 .sidebar .stButton>button {
-    background-color: #4682b4;
-    color: rgb(95, 59, 179);
+    background-color: #4682b4; /* Steel blue */
+    color: #ffffff; /* White text */
     font-size: 18px;
     border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Animation effects */
 }
+
+.sidebar .stButton>button:hover {
+    background-color: #5a9bd4; /* Lighter steel blue on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+}
+
+/* Style the text inputs */
 .stTextInput>div>input {
     border-radius: 8px;
     border: 1px solid #4682b4;
+    padding: 10px;
+    font-size: 16px; /* Increase font size for better readability */
+    transition: border-color 0.3s; /* Animation for border color change */
 }
+
+.stTextInput>div>input:focus {
+    border-color: #1e90ff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
 .sidebar .stTextInput>div>input {
     border: 1px solid #87ceeb;
+}
+
+/* Customize the code display area */
+.stCodeBlock {
+    background-color: #f0f8ff; /* Light code background */
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #4682b4;
+    overflow-x: auto; /* Enable horizontal scrolling for long code */
+}
+
+/* Add a hover effect on code blocks */
+.stCodeBlock:hover {
+    background-color: #e0f7fa; /* Light cyan on hover */
+}
+
+/* Style for subheaders */
+h3 {
+    color: #030312;
+    margin-top: 20px;
+    font-size: 1.8em;
+    text-align: left;
 }
