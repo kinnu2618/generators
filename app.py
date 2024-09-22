@@ -21,43 +21,41 @@ model = genai.GenerativeModel(
 
 # Function to generate a blog post
 def generate_blog_post(title, keywords, num_words):
+    prompt = (
+        f"Generate a comprehensive, engaging blog post relevant to the title '{title}' "
+        f"and incorporating the keywords: {keywords}. The blog should be approximately {num_words} words long."
+    )
     chat_session = model.start_chat(
         history=[
-            {
-                "role": "user",
-                "parts": [
-                    f"Generate a comprehensive, engaging blog post relevant to the given title \"{title}\" and keywords \"{keywords}\". Make sure to incorporate these keywords in the blog post. The blog should be approximately {num_words} words in length, suitable for an online audience. Ensure the content is original, informative, and maintains a consistent tone throughout.",
-                ],
-            },
+            {"role": "user", "parts": [prompt]},
         ]
     )
-    response = chat_session.send_message("INSERT_INPUT_HERE")
+    response = chat_session.send_message(prompt)
     return response.text
 
 # Function to generate code
 def generate_code(problem_statement, programming_language, programming_type):
+    prompt = (
+        f"Generate code for the following problem statement: '{problem_statement}' "
+        f"in {programming_language}. The code should focus on {programming_type} programming."
+    )
     chat_session = model.start_chat(
         history=[
-            {
-                "role": "user",
-                "parts": [
-                    f"Generate a code relevant to the given problem statement \"{problem_statement}\" in programming language \"{programming_language}\". The code should be either \"{programming_type}\" based. Make sure the code is original, informative, and suitable for an online audience.",
-                ],
-            },
+            {"role": "user", "parts": [prompt]},
         ]
     )
-    response = chat_session.send_message("INSERT_INPUT_HERE")
+    response = chat_session.send_message(prompt)
     return response.text
 
 # Streamlit interface layout configuration
 st.set_page_config(layout="wide")
 
 # Sidebar for selecting between Blog Generator or Code Generator
-st.sidebar.title("SELECT APPLICATION")
-app_mode = st.sidebar.radio("Choose Application", ["Blog Generator", "Code Generator"])
+st.sidebar.title("Select Application")
+app_mode = st.sidebar.selectbox("Choose Application", ["Blog Generator 📝", "Code Generator 💻"])
 
 # Blog Generator Interface
-if app_mode == "Blog Generator":
+if app_mode == "Blog Generator 📝":
     st.title('📝 BLOG GENERATOR 😎')
     st.subheader('Enter your topic and get a blog post generated for you!')
 
@@ -67,7 +65,7 @@ if app_mode == "Blog Generator":
 
     blog_title = st.sidebar.text_input("Blog Title")
     keywords = st.sidebar.text_area("Keywords (comma-separated)")
-    num_words = st.sidebar.slider("Number of Words", min_value=1000, max_value=100000, step=100)
+    num_words = st.sidebar.slider("Number of Words", min_value=500, max_value=3000, step=100)
     
     generate_blog_button = st.sidebar.button("Generate Blog Post 📝")
 
@@ -81,7 +79,7 @@ if app_mode == "Blog Generator":
             st.error("Please provide both a blog title and keywords.")
 
 # Code Generator Interface
-elif app_mode == "Code Generator":
+elif app_mode == "Code Generator 💻":
     st.title('💻 CODE GENERATOR 🤖')
     st.subheader('Enter your problem statement and get code generated!')
 
