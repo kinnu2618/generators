@@ -1,4 +1,3 @@
-import os
 import streamlit as st
 import google.generativeai as genai
 from apikey import google_gemini_api_key  # Replace this with your actual API key import method
@@ -20,7 +19,7 @@ model = genai.GenerativeModel(
     generation_config=generation_config,
 )
 
-# Function to generate code based on the problem statement, language, and type
+# Function to generate code
 def generate_code(problem_statement, programming_language, programming_type):
     chat_session = model.start_chat(
         history=[
@@ -35,54 +34,37 @@ def generate_code(problem_statement, programming_language, programming_type):
     response = chat_session.send_message("INSERT_INPUT_HERE")
     return response.text
 
-# Function to load the external CSS file
-def load_css(file_name):
-    file_path = os.path.join(os.getcwd(), file_name)
-    if os.path.exists(file_path):
-        with open(file_path) as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-    else:
-        st.error(f"CSS file not found: {file_name}")
+# Streamlit interface layout configuration
+st.set_page_config(layout="wide")
 
-# Set page configuration and load the CSS file
-st.set_page_config(layout="wide", page_title="Code Generator")
-load_css("styles.css")
-
-# Add an optional header image (replace with your image URL)
-st.image('https://i.pinimg.com/474x/7f/08/49/7f08493bc0004396c9eff78102928afc.jpg', use_column_width=True)
-
-# Title and description of the app
-st.markdown("<h1>💻 CODE GENERATOR 😜🤖</h1>", unsafe_allow_html=True)
-st.subheader('Enter your problem statement and choose options to generate code!')
+# Title of the app
+st.title('C O D E ')
+st.subheader('Enter your problem statement and solve your problems💀!')
 
 # Sidebar for user input
 with st.sidebar:
-    st.image('https://tse1.mm.bing.net/th?id=OIP.l7yfZxejSdQkR89sVHP1CwHaFd&pid=Api&P=0&h=180', use_column_width=True)  # Add an image to the sidebar
-    st.title("💡 INPUT YOUR CODE DETAILS")
-    st.subheader("📝 ENTER DETAILS FOR CODE GENERATION")
+    st.title("INPUT YOUR CODE DETAILS")
+    st.subheader("Enter Details for Code Generation")
 
-    # Input fields for problem statement, programming language, and programming type
-    problem_statement = st.text_input("PROBLEM STATEMENT👀")
-    programming_language = st.text_input("PROGRAMMING LANGUAGE👨🏻‍🍳")
+    problem_statement = st.text_input("PROBLEM STATEMENT")
+    programming_language = st.text_input("Programming Language")
     
-    # Dropdown selection for programming type
+    # Select between Static or Dynamic programming
     programming_type = st.selectbox(
-        "PROGRAMMING TYPE",
-        ("STATIC PROGRAMMING😜", "DYNAMIC PROGRAMMING🗿")
+        "Programming Type",
+        ("Static ", "Dynamic")
     )
 
-    # Generate code button
-    submit_button = st.button("Generate Code 💻")
+    submit_button = st.button("Generate Code👩🏻‍🍳")
 
 # If the user presses the button
 if submit_button:
     if problem_statement and programming_language and programming_type:
-        with st.spinner("🛠️ Generating code..."):
+        with st.spinner("Generating code..."):
             # Call the generate_code function
             generated_code = generate_code(problem_statement, programming_language, programming_type)
             
             # Display the generated code
-            st.markdown("<h3>📝 Generated Code:</h3>", unsafe_allow_html=True)
             st.code(generated_code)
     else:
-        st.error("⚠️ Please provide a problem statement, programming language, and choose a programming type.")
+        st.error("Please provide a problem statement, programming language, and choose a programming type.")
