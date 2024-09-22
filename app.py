@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import google.generativeai as genai
 from apikey import google_gemini_api_key  # Replace this with your actual API key import method
@@ -19,7 +20,7 @@ model = genai.GenerativeModel(
     generation_config=generation_config,
 )
 
-# Function to generate code
+# Function to generate code based on the problem statement, language, and type
 def generate_code(problem_statement, programming_language, programming_type):
     chat_session = model.start_chat(
         history=[
@@ -34,39 +35,43 @@ def generate_code(problem_statement, programming_language, programming_type):
     response = chat_session.send_message("INSERT_INPUT_HERE")
     return response.text
 
-# Load external CSS file
+# Function to load the external CSS file
 def load_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    file_path = os.path.join(os.getcwd(), file_name)
+    if os.path.exists(file_path):
+        with open(file_path) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    else:
+        st.error(f"CSS file not found: {file_name}")
 
-# Set page configuration and load external CSS
+# Set page configuration and load the CSS file
 st.set_page_config(layout="wide", page_title="Code Generator")
 load_css("styles.css")
 
-# Add a background image or header image
+# Add an optional header image (replace with your image URL)
 st.image('https://example.com/header_image.jpg', use_column_width=True)
 
-# Title of the app with custom style
-st.markdown("<h1> CODE GENERATOR 😜🤖</h1>", unsafe_allow_html=True)
-st.subheader('ENTER YOUR PROBLEM STATEMENT AND CHOOSE OPTIONS TO GENERATE CODE!')
+# Title and description of the app
+st.markdown("<h1>💻 CODE GENERATOR 😜🤖</h1>", unsafe_allow_html=True)
+st.subheader('Enter your problem statement and choose options to generate code!')
 
-# Sidebar for user input with customized title and styling
+# Sidebar for user input
 with st.sidebar:
     st.image('https://example.com/sidebar_image.jpg', use_column_width=True)  # Add an image to the sidebar
     st.title("💡 INPUT YOUR CODE DETAILS")
     st.subheader("📝 ENTER DETAILS FOR CODE GENERATION")
 
-    # Customized input fields
+    # Input fields for problem statement, programming language, and programming type
     problem_statement = st.text_input("PROBLEM STATEMENT👀")
     programming_language = st.text_input("PROGRAMMING LANGUAGE👨🏻‍🍳")
     
-    # Dropdown selection for programming type with styling
+    # Dropdown selection for programming type
     programming_type = st.selectbox(
         "PROGRAMMING TYPE",
-        ("STATIC PROGRAMMING😜 ", "DYNAMIC PROGRAMMING🗿")
+        ("STATIC PROGRAMMING😜", "DYNAMIC PROGRAMMING🗿")
     )
 
-    # Customized button
+    # Generate code button
     submit_button = st.button("Generate Code 💻")
 
 # If the user presses the button
@@ -76,7 +81,7 @@ if submit_button:
             # Call the generate_code function
             generated_code = generate_code(problem_statement, programming_language, programming_type)
             
-            # Display the generated code with a custom layout
+            # Display the generated code
             st.markdown("<h3>📝 Generated Code:</h3>", unsafe_allow_html=True)
             st.code(generated_code)
     else:
