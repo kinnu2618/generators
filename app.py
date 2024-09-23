@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import google.generativeai as genai
 from apikey import google_gemini_api_key  
@@ -26,9 +27,7 @@ def generate_blog_post(title, keywords, num_words):
         f"and incorporating the keywords: {keywords}. The blog should be approximately {num_words} words long."
     )
     chat_session = model.start_chat(
-        history=[
-            {"role": "user", "parts": [prompt]},
-        ]
+        history=[{"role": "user", "parts": [prompt]}]
     )
     response = chat_session.send_message(prompt)
     return response.text
@@ -40,9 +39,19 @@ def generate_code(problem_statement, programming_language, programming_type):
         f"in {programming_language}. The code should be in {programming_type} type of programming."
     )
     chat_session = model.start_chat(
-        history=[
-            {"role": "user", "parts": [prompt]},
-        ]
+        history=[{"role": "user", "parts": [prompt]}]
+    )
+    response = chat_session.send_message(prompt)
+    return response.text
+
+# Function to translate text
+def translate_text(input_language, output_language, text):
+    prompt = (
+        f"Translate this text from {input_language} into {output_language}, "
+        f"using simple language:\n\"{text}\""
+    )
+    chat_session = model.start_chat(
+        history=[{"role": "user", "parts": [prompt]}]
     )
     response = chat_session.send_message(prompt)
     return response.text
@@ -50,12 +59,39 @@ def generate_code(problem_statement, programming_language, programming_type):
 # Streamlit interface layout configuration
 st.set_page_config(layout="wide")
 
-# Sidebar for selecting between Blog Generator or Code Generator
+# Sidebar for selecting between Translation, Blog Generator, or Code Generator
 st.sidebar.title("SELECT APPLICATION")
-app_mode = st.sidebar.selectbox("Choose Application", ["BLOG GENERATOR 📝", "CODE GENERATOR 💻"])
+app_mode = st.sidebar.selectbox(
+    "Choose Application", 
+    ["TRANSLATION GENERATOR 🌍", "BLOG GENERATOR 📝", "CODE GENERATOR 💻"]
+)
+
+# Translation Generator Interface
+if app_mode == "TRANSLATION GENERATOR 🌍":
+    st.title('T R A N S L A T I O N 🌍')
+    st.subheader('ENTER TEXT TO TRANSLATE INTO ANOTHER LANGUAGE!')
+
+    # Sidebar for translation input
+    st.sidebar.title("TRANSLATION DETAILS")
+    st.sidebar.subheader("ENTER DETAILS FOR TRANSLATION")
+
+    input_language = st.sidebar.text_input("INPUT LANGUAGE")
+    output_language = st.sidebar.text_input("OUTPUT LANGUAGE")
+    text_to_translate = st.sidebar.text_area("TEXT TO TRANSLATE")
+    
+    translate_button = st.sidebar.button("TRANSLATE 🌍")
+
+    # If the user presses the button to translate
+    if translate_button:
+        if input_language and output_language and text_to_translate:
+            with st.spinner("Translating...!"):
+                translation = translate_text(input_language, output_language, text_to_translate)
+                st.write(translation)
+        else:
+            st.error("Please provide input language, output language, and text to translate.")
 
 # Blog Generator Interface
-if app_mode == "BLOG GENERATOR 📝":
+elif app_mode == "BLOG GENERATOR 📝":
     st.title('B L O G 😎')
     st.subheader('ENTER YOUR TOPIC AND GET A BLOG POST GENERATED FOR YOU!')
 
@@ -102,4 +138,4 @@ elif app_mode == "CODE GENERATOR 💻":
                 generated_code = generate_code(problem_statement, programming_language, programming_type)
                 st.code(generated_code)
         else:
-            st.error("Please provide a problem statement, programming language, and choose a programming type....!")
+            st.error("Please provide a problem statement, programming language, and choose a programming type.")
