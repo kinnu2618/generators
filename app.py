@@ -79,7 +79,7 @@ app_mode = st.sidebar.selectbox(
 )
 
 # Translation Generator Interface
-if app_mode == "TRANSLATION GENERATOR 🌍":
+if app_mode == "TRANSLATOR 🌍":
     st.title('T R A N S L A T I O N 🌍')
     st.subheader('ENTER TEXT TO TRANSLATE INTO ANOTHER LANGUAGE!')
 
@@ -87,8 +87,8 @@ if app_mode == "TRANSLATION GENERATOR 🌍":
     st.sidebar.title("TRANSLATION DETAILS")
     st.sidebar.subheader("ENTER DETAILS FOR TRANSLATION")
 
-    input_language = st.sidebar.text_input("Input Language (e.g., English)")
-    output_language = st.sidebar.text_input("Output Language (e.g., Telugu)")
+    input_language = st.sidebar.text_input("Input Language")
+    output_language = st.sidebar.text_input("Output Language")
     text_to_translate = st.sidebar.text_area("Text to Translate")
     
     translate_button = st.sidebar.button("TRANSLATE 🌍")
@@ -103,7 +103,7 @@ if app_mode == "TRANSLATION GENERATOR 🌍":
             st.error("Please provide input language, output language, and text to translate.")
 
 # Blog Generator Interface
-elif app_mode == "BLOG GENERATOR 📝":
+elif app_mode == "BLOG 📝":
     st.title('B L O G 😎')
     st.subheader('ENTER YOUR TOPIC AND GET A BLOG POST GENERATED FOR YOU!')
 
@@ -127,7 +127,7 @@ elif app_mode == "BLOG GENERATOR 📝":
             st.error("Please provide both a blog title and keywords.")
 
 # Code Generator Interface
-elif app_mode == "CODE GENERATOR 💻":
+elif app_mode == "CODE 💻":
     st.title('C O D E 🤖')
     st.subheader('ENTER YOUR PROBLEM STATEMENT AND GET CODE GENERATED!')
 
@@ -153,8 +153,8 @@ elif app_mode == "CODE GENERATOR 💻":
             st.error("Please provide a problem statement, programming language, and choose a programming type.")
 
 # Caption and Hashtag Generator Interface with Image Upload
-elif app_mode == "CAPTION & HASHTAG GENERATOR 📷":
-    st.title('C A P T I O N & H A S H T A G S 📷')
+elif app_mode == "CAPTION & HASHTAG 📷":
+    st.title('C A P T I O N  &  H A S H T A G S 📷')
     st.subheader('UPLOAD AN IMAGE AND GENERATE CAPTION AND HASHTAGS!')
 
     # Sidebar for caption and hashtag input
@@ -168,7 +168,7 @@ elif app_mode == "CAPTION & HASHTAG GENERATOR 📷":
     caption_language = st.sidebar.text_input("Language (e.g., English)")
 
     # Placeholder for image description (manually added for now)
-    image_description = st.sidebar.text_area("Image Description (optional)")
+    image_description = st.sidebar.text_area("Image Description")
 
     # Button to generate caption and hashtags
     generate_caption_button = st.sidebar.button("GENERATE CAPTION & HASHTAGS 📷")
