@@ -1,6 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
-from apikey import google_gemini_api_key  
+from google.generativeai.generation_types import StopCandidateException
+from apikey import google_gemini_api_key  # Ensure your API key is stored securely
 
 # Configure the API key for Google Gemini AI
 genai.configure(api_key=google_gemini_api_key)
@@ -25,13 +26,20 @@ def generate_blog_post(title, keywords, num_words):
         f"Generate a comprehensive, engaging blog post relevant to the title '{title}' "
         f"and incorporating the keywords: {keywords}. The blog should be approximately {num_words} words long."
     )
-    chat_session = model.start_chat(
-        history=[
-            {"role": "user", "parts": [prompt]},
-        ]
-    )
-    response = chat_session.send_message(prompt)
-    return response.text
+    try:
+        chat_session = model.start_chat(
+            history=[
+                {"role": "user", "parts": [prompt]},
+            ]
+        )
+        response = chat_session.send_message(prompt)
+        return response.text
+    except StopCandidateException as e:
+        st.error("An error occurred while generating the blog. Please try again later.")
+        return None
+    except Exception as e:
+        st.error(f"Unexpected error: {e}")
+        return None
 
 # Function to generate code
 def generate_code(problem_statement, programming_language, programming_type):
@@ -39,13 +47,20 @@ def generate_code(problem_statement, programming_language, programming_type):
         f"Generate code for the following problem statement: '{problem_statement}' "
         f"in {programming_language}. The code should be in {programming_type} type of programming."
     )
-    chat_session = model.start_chat(
-        history=[
-            {"role": "user", "parts": [prompt]},
-        ]
-    )
-    response = chat_session.send_message(prompt)
-    return response.text
+    try:
+        chat_session = model.start_chat(
+            history=[
+                {"role": "user", "parts": [prompt]},
+            ]
+        )
+        response = chat_session.send_message(prompt)
+        return response.text
+    except StopCandidateException as e:
+        st.error("An error occurred while generating the code. Please try again later.")
+        return None
+    except Exception as e:
+        st.error(f"Unexpected error: {e}")
+        return None
 
 # Streamlit interface layout configuration
 st.set_page_config(layout="wide")
@@ -74,7 +89,8 @@ if app_mode == "BLOG GENERATOR 📝":
         if blog_title and keywords:
             with st.spinner("Generating blog post...!"):
                 blog_content = generate_blog_post(blog_title, keywords, num_words)
-                st.write(blog_content)
+                if blog_content:
+                    st.write(blog_content)
         else:
             st.error("Please provide both a blog title and keywords.")
 
@@ -100,6 +116,7 @@ elif app_mode == "CODE GENERATOR 💻":
         if problem_statement and programming_language and programming_type:
             with st.spinner("Generating code...!"):
                 generated_code = generate_code(problem_statement, programming_language, programming_type)
-                st.code(generated_code)
+                if generated_code:
+                    st.code(generated_code)
         else:
-            st.error("Please provide a problem statement, programming language, and choose a programming type....!")
+            st.error("Please provide a problem statement, programming language, and choose a programming type.")
