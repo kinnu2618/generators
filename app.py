@@ -79,7 +79,7 @@ app_mode = st.sidebar.selectbox(
 )
 
 # Translation Generator Interface
-if app_mode == "TRANSLATOR 🌍":
+if app_mode == "TRANSLATION GENERATOR 🌍":
     st.title('T R A N S L A T I O N 🌍')
     st.subheader('ENTER TEXT TO TRANSLATE INTO ANOTHER LANGUAGE!')
 
@@ -103,7 +103,7 @@ if app_mode == "TRANSLATOR 🌍":
             st.error("Please provide input language, output language, and text to translate.")
 
 # Blog Generator Interface
-elif app_mode == "BLOG 📝":
+elif app_mode == "BLOG GENERATOR 📝":
     st.title('B L O G 😎')
     st.subheader('ENTER YOUR TOPIC AND GET A BLOG POST GENERATED FOR YOU!')
 
@@ -113,7 +113,7 @@ elif app_mode == "BLOG 📝":
 
     blog_title = st.sidebar.text_input("BLOG TITLE")
     keywords = st.sidebar.text_area("KEYWORDS (comma-separated)")
-    num_words = st.sidebar.slider("NO.OF WORDS", min_value=1000, max_value=100000, step=1000)
+    num_words = st.sidebar.slider("NO. OF WORDS", min_value=1000, max_value=100000, step=1000)
     
     generate_blog_button = st.sidebar.button("GENERATE BLOG POST 📝")
 
@@ -127,7 +127,7 @@ elif app_mode == "BLOG 📝":
             st.error("Please provide both a blog title and keywords.")
 
 # Code Generator Interface
-elif app_mode == "CODE 💻":
+elif app_mode == "CODE GENERATOR 💻":
     st.title('C O D E 🤖')
     st.subheader('ENTER YOUR PROBLEM STATEMENT AND GET CODE GENERATED!')
 
@@ -153,7 +153,7 @@ elif app_mode == "CODE 💻":
             st.error("Please provide a problem statement, programming language, and choose a programming type.")
 
 # Caption and Hashtag Generator Interface with Image Upload
-elif app_mode == "CAPTION & HASHTAG 📷":
+elif app_mode == "CAPTION & HASHTAG GENERATOR 📷":
     st.title('C A P T I O N  &  H A S H T A G S 📷')
     st.subheader('UPLOAD AN IMAGE AND GENERATE CAPTION AND HASHTAGS!')
 
@@ -165,7 +165,7 @@ elif app_mode == "CAPTION & HASHTAG 📷":
     uploaded_image = st.sidebar.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
     
     # Input for language
-    caption_language = st.sidebar.text_input("Language (e.g., English)")
+    caption_language = st.sidebar.text_input("Language")
 
     # Placeholder for image description (manually added for now)
     image_description = st.sidebar.text_area("Image Description")
