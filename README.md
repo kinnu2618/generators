@@ -1,1 +1,1 @@
-# code-generator
+# generators
