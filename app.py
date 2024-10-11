@@ -69,13 +69,27 @@ def translate_text(input_language, output_language, text):
     response = chat_session.send_message(prompt)
     return response.text
 
+# Function for AI question-answering
+def ask_ai_question(user_input):
+    if not user_input.strip():
+        raise ValueError("Question cannot be empty. Please enter a question.")
+    
+    prompt = f"give me the big paragrapic answer for whatever is asked\nquestion = {user_input}"
+    
+    chat_session = model.start_chat(
+        history=[{"role": "user", "parts": [prompt]}]
+    )
+    
+    response = chat_session.send_message(user_input)
+    return response.text
+
 # Streamlit interface layout configuration
 st.set_page_config(layout="wide")
 
 # Sidebar for selecting application mode
 app_mode = st.sidebar.selectbox(
     "Choose Application", 
-    ["TRANSLATION GENERATOR 🌍", "BLOG GENERATOR 📝", "CODE GENERATOR 💻", "CAPTION & HASHTAG GENERATOR 📷"]
+    ["TRANSLATION GENERATOR 🌍", "BLOG GENERATOR 📝", "CODE GENERATOR 💻", "CAPTION & HASHTAG GENERATOR 📷", "ASK AI 🤖"]
 )
 
 # Translation Generator Interface
@@ -83,17 +97,12 @@ if app_mode == "TRANSLATION GENERATOR 🌍":
     st.title('T R A N S L A T I O N 🌍')
     st.subheader('ENTER TEXT TO TRANSLATE INTO ANOTHER LANGUAGE!')
 
-    # Sidebar for translation input
-    st.sidebar.title("TRANSLATION DETAILS")
-    st.sidebar.subheader("ENTER DETAILS FOR TRANSLATION")
-
     input_language = st.sidebar.text_input("Input Language")
     output_language = st.sidebar.text_input("Output Language")
     text_to_translate = st.sidebar.text_area("Text to Translate")
     
     translate_button = st.sidebar.button("TRANSLATE 🌍")
 
-    # If the user presses the button to translate
     if translate_button:
         if input_language and output_language and text_to_translate:
             with st.spinner("Translating...!"):
@@ -107,17 +116,12 @@ elif app_mode == "BLOG GENERATOR 📝":
     st.title('B L O G 😎')
     st.subheader('ENTER YOUR TOPIC AND GET A BLOG POST GENERATED FOR YOU!')
 
-    # Sidebar for blog post input
-    st.sidebar.title("BLOG DETAILS")
-    st.sidebar.subheader("ENTER DETAILS FOR BLOG GENERATION")
-
     blog_title = st.sidebar.text_input("BLOG TITLE")
     keywords = st.sidebar.text_area("KEYWORDS (comma-separated)")
     num_words = st.sidebar.slider("NO. OF WORDS", min_value=1000, max_value=100000, step=1000)
     
     generate_blog_button = st.sidebar.button("GENERATE BLOG POST 📝")
 
-    # If the user presses the button to generate blog
     if generate_blog_button:
         if blog_title and keywords:
             with st.spinner("Generating blog post...!"):
@@ -131,19 +135,12 @@ elif app_mode == "CODE GENERATOR 💻":
     st.title('C O D E 🤖')
     st.subheader('ENTER YOUR PROBLEM STATEMENT AND GET CODE GENERATED!')
 
-    # Sidebar for code input
-    st.sidebar.title("CODE DETAILS")
-    st.sidebar.subheader("ENTER CONTEXT FOR CODE GENERATION")
-
     problem_statement = st.sidebar.text_area("PROBLEM STATEMENT")
     programming_language = st.sidebar.text_input("PROGRAMMING LANGUAGE")
-    
-    # Select between Static or Dynamic programming
     programming_type = st.sidebar.selectbox("PROGRAMMING TYPE", ["STATIC", "DYNAMIC"])
     
     generate_code_button = st.sidebar.button("GENERATE CODE 💻!")
 
-    # If the user presses the button to generate code
     if generate_code_button:
         if problem_statement and programming_language and programming_type:
             with st.spinner("Generating code...!"):
@@ -157,33 +154,20 @@ elif app_mode == "CAPTION & HASHTAG GENERATOR 📷":
     st.title('C A P T I O N  &  H A S H T A G S 📷')
     st.subheader('UPLOAD AN IMAGE AND GENERATE CAPTION AND HASHTAGS!')
 
-    # Sidebar for caption and hashtag input
-    st.sidebar.title("CAPTION & HASHTAGS DETAILS")
-    st.sidebar.subheader("UPLOAD IMAGE AND ENTER LANGUAGE")
-
-    # Image upload option
     uploaded_image = st.sidebar.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
-    
-    # Input for language
     caption_language = st.sidebar.text_input("Language")
-
-    # Placeholder for image description (manually added for now)
     image_description = st.sidebar.text_area("Image Description")
 
-    # Button to generate caption and hashtags
     generate_caption_button = st.sidebar.button("GENERATE CAPTION & HASHTAGS 📷")
 
-    # Display uploaded image if available
-    if uploaded_image is not None:
+    if uploaded_image:
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
     
-    # If the user presses the button to generate caption and hashtags
     if generate_caption_button:
         if uploaded_image and caption_language:
             if not image_description:
                 st.warning("No image description provided. Please add one for better results.")
             with st.spinner("Generating caption and hashtags...!"):
-                # If the image description is provided, use it for generating captions and hashtags
                 if image_description:
                     caption_and_hashtags = generate_caption_and_hashtags(image_description, caption_language)
                     st.write(caption_and_hashtags)
@@ -191,3 +175,21 @@ elif app_mode == "CAPTION & HASHTAG GENERATOR 📷":
                     st.error("Please provide an image description.")
         else:
             st.error("Please upload an image and provide the language for caption and hashtags.")
+
+# AI Question Answering Interface
+elif app_mode == "ASK AI 🤖":
+    st.title("ASK AI 🤖")
+    st.subheader("Enter your question and get an AI-generated answer!")
+
+    user_input = st.text_input("Enter your question:")
+
+    if st.button("Get Answer"):
+        try:
+            with st.spinner("Generating answer...!"):
+                answer = ask_ai_question(user_input)
+                st.subheader("Answer:")
+                st.write(answer)
+        except ValueError as e:
+            st.error(str(e))
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
